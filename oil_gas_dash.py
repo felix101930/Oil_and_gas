@@ -1,3 +1,10 @@
+
+# TODO: [Add details and description]
+# [Add introduction ]
+# [add Description and how to use for each graph]
+# [Add where to use for each graph]
+# [Add styles]
+
 import dash
 from dash import dcc
 import dash_bootstrap_components as dbc
