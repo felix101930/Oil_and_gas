@@ -1,5 +1,6 @@
 import dash
 from dash import dcc
+import dash_bootstrap_components as dbc
 from dash import html
 import plotly.express as px
 import pandas as pd
@@ -20,6 +21,13 @@ end_date = max_date.strftime('%Y-%m-%d')
 # Define the layout of the app
 app.layout = html.Div(children=[
     html.H1(children="Crude Oil Price Dashboard", style={'textAlign': 'center', 'color': '#333'}),
+
+
+    #Confirm dialog warning    
+      dcc.ConfirmDialog(
+        id='date-warning-dialog',
+        message="Date range cannot exceed 10 years."
+    ),
 
     # Ticker dropdown for price chart with an "All Tickers" option
     dcc.Dropdown(
@@ -110,7 +118,8 @@ app.layout = html.Div(children=[
 @app.callback(
     [Output('price-chart', 'figure'),
      Output('decomposition-chart', 'figure'),
-     Output('seasonal-chart', 'figure')],
+     Output('seasonal-chart', 'figure'),
+     Output('date-warning-dialog', 'displayed')],
     [Input('price-ticker-dropdown', 'value'),
      Input('y-dropdown', 'value'),
      Input('decomposition-ticker-dropdown', 'value'),
@@ -140,15 +149,17 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
     fig_seasonality = analyze_oil_decomposition(df, start_date, end_date, decomposition_ticker, selected_y)
 
     # Seasonal analysis chart logic
-    # Ensure the date range does not exceed 24 years
+# Check if date range exceeds 10 years
+    date_range_exceeds_limit = pd.to_datetime(seasonal_end_date) - pd.to_datetime(seasonal_start_date) > pd.Timedelta(days=365 * 10)
 
-    #insert a try catch and raise warning to user
-    if pd.to_datetime(seasonal_end_date) - pd.to_datetime(seasonal_start_date) > pd.Timedelta(days=365 * 10):
-        raise ValueError("Date range cannot exceed 10 years.")
+    # Seasonal analysis chart logic
+    if date_range_exceeds_limit:
+        # Display the warning dialog
+        return fig_price, fig_seasonality, {}, True
 
     fig_seasonal = analyze_seasonal_data(df, seasonal_start_date, seasonal_end_date, seasonal_ticker)
 
-    return fig_price, fig_seasonality, fig_seasonal
+    return fig_price, fig_seasonality, fig_seasonal, False
 
 # Run the app
 if __name__ == '__main__':
