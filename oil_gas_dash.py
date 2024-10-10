@@ -25,6 +25,11 @@ max_date = pd.to_datetime(df['date'].max())
 start_date = (max_date - pd.DateOffset(years=1)).strftime('%Y-%m-%d')
 end_date = max_date.strftime('%Y-%m-%d')
 
+labels = { "CL=F": "Crude Oil",
+                  "HO=F": "Heating Oil",
+                  "NG=F": "Natural Gas",
+                  "RB=F": "RBOB Gasoline",
+                  "BZ=F": "Brent Crude Oil"}
 # Define the layout of the app
 app.layout = dbc.Container([
     dbc.Row([
@@ -41,7 +46,7 @@ app.layout = dbc.Container([
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='price-ticker-dropdown',
-                options=[{'label': ticker, 'value': ticker} for ticker in df['ticker'].unique()] + [{'label': 'All Tickers', 'value': 'ALL'}],
+                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()] + [{'label': 'All Tickers', 'value': 'ALL'}],
                 value='CL=F',
                 style={'marginBottom': '20px'}
             )
@@ -67,7 +72,7 @@ app.layout = dbc.Container([
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='decomposition-ticker-dropdown',
-                options=[{'label': ticker, 'value': ticker} for ticker in df['ticker'].unique()],
+                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
                 value='CL=F',
                 style={'marginBottom': '20px'}
             ),
@@ -91,7 +96,7 @@ app.layout = dbc.Container([
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='seasonal-ticker-dropdown',
-                options=[{'label': ticker, 'value': ticker} for ticker in df['ticker'].unique() ],
+                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique() ],
                 value='CL=F',
                 style={'marginBottom': '20px'}
             ),
