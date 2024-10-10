@@ -18,7 +18,7 @@ from graphing import analyze_oil_decomposition, analyze_seasonal_data  # Assumin
 df = pd.read_csv("datasets/all_fuels_data.csv")  # Replace "your_data.csv" with your file path
 
 # Create the Dash app
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 # Calculate date range for the date pickers
 max_date = pd.to_datetime(df['date'].max())
@@ -136,13 +136,21 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
 
     fig_price = px.line(filtered_df, x='date', y=selected_y, color='ticker' if price_ticker == 'ALL' else None, title=title)
     fig_price.update_layout(
-        plot_bgcolor='#f2f2f2',
-        paper_bgcolor='#f2f2f2',
+        # plot_bgcolor='#f2f2f2',
+        
+        plot_bgcolor="#545454",
+        paper_bgcolor='#545454',
         font_color='#333'
     )
 
     # Seasonal decomposition chart logic
     fig_seasonality = analyze_oil_decomposition(df, start_date, end_date, decomposition_ticker, selected_y)
+    
+    fig_seasonality.update_layout(
+        plot_bgcolor="#545454",
+        paper_bgcolor='#545454',
+        font_color='#333'
+    )
 
     # Check if date range exceeds 10 years
     date_range_exceeds_limit = pd.to_datetime(seasonal_end_date) - pd.to_datetime(seasonal_start_date) > pd.Timedelta(days=365 * 10)
@@ -153,6 +161,11 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
         return fig_price, fig_seasonality, {}, True
 
     fig_seasonal = analyze_seasonal_data(df, seasonal_start_date, seasonal_end_date, seasonal_ticker)
+    fig_seasonal.update_layout(
+        plot_bgcolor="#545454",
+        paper_bgcolor='#545454',
+        font_color='#333'
+    )
 
     return fig_price, fig_seasonality, fig_seasonal, False
 
