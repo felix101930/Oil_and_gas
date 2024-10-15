@@ -1,1 +1,43 @@
-# Oil_and_gas
+# Crude Oil Price Dashboard
+
+This is a web application for visualizing and analyzing historical price data for various fuel commodities, such as crude oil, heating oil, natural gas, RBOB gasoline, and Brent crude oil. The dashboard is built with Python, Dash, Plotly, and Bootstrap for a responsive and modern design.
+
+## Table of Contents
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Data Source](#data-source)
+- [License](#license)
+
+## Features
+- **Interactive Date Range Selector**: Choose the date range for analyzing trends, seasonal patterns, and prices.
+- **Commodity Price Chart**: Visualize historical prices for selected commodities.
+- **Seasonal Decomposition Analysis**: Decompose the time series data into trend, seasonality, and residuals.
+- **Seasonal Analysis**: Display seasonal patterns and identify high and low points within a selected date range.
+- **Responsive Design**: Built with Dash Bootstrap components, compatible with various screen sizes.
+
+## Screenshots
+![Screenshot 1](https://github.com/felix101930/Oil_and_gas/blob/dash_app_render/Screenshot1.png)
+
+## Installation
+To run this project locally, follow these steps:
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repo link>
+   cd yourrepository
+## Usage
+
+- **Commodity Close Price Chart**:
+  - Select a commodity from the dropdown menu, such as Crude Oil or Natural Gas, to visualize its historical prices.
+  - Choose an attribute for the Y-axis to view trends over time for the selected commodity.
+
+- **Seasonal Decomposition Analysis**:
+  - Choose a commodity and a date range to analyze seasonal, trend, and residual components.
+  - This helps decompose several factors that contribute to the original series
+
+- **Seasonal Analysis**:
+  - Select a commodity and a date range to view a calendar plot that highlights seasonal patterns.
+  - Use the date picker to set a specific date range within the past 10 years.
