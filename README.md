@@ -7,9 +7,7 @@ This is a web application for visualizing and analyzing historical price data fo
 - [Screenshots](#screenshots)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
 - [Data Source](#data-source)
-- [License](#license)
 
 ## Features
 - **Interactive Date Range Selector**: Choose the date range for analyzing trends, seasonal patterns, and prices.
@@ -41,3 +39,9 @@ To run this project locally, follow these steps:
 - **Seasonal Analysis**:
   - Select a commodity and a date range to view a calendar plot that highlights seasonal patterns.
   - Use the date picker to set a specific date range within the past 10 years.
+ 
+## Data Source
+
+The dataset used in this dashboard is sourced from [Kaggle's Fuels Futures Data](https://www.kaggle.com/datasets/guillemservera/fuels-futures-data). It includes historical price data for various commodities such as Crude Oil, Heating Oil, Natural Gas, RBOB Gasoline, and Brent Crude Oil.
+
+
