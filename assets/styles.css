@@ -1,11 +1,47 @@
 h3 {
-    border: 2px solid #007bff; /* Blue border */
+    border: 2px solid #007bff;
+    /* Blue border */
     padding: 10px;
     border-radius: 5px;
 }
 
 h4 {
-    border: 2px solid #ffc107; /* Yellow border */
+    border: 2px solid #ffc107;
+    /* Yellow border */
     padding: 10px;
     border-radius: 5px;
+}
+
+
+/* assets/styles.css */
+
+/* Custom styles for dropdown options */
+.dropdown-menu {
+
+    margin-bottom: 20px;
+        color : 'black';
+        background-color: white;
+}
+
+.dropdown-item {
+    color: #000;
+    /* Change this to your desired text color */
+}
+
+.dropdown-item:hover {
+    background-color: #007bff;
+    /* Optional: Change background on hover */
+    color: #fff;
+    /* Change this to your desired text color on hover */
+}
+
+/* Additional custom styles */
+.text-info {
+    border: 2px solid #17a2b8;
+    /* Example border color for H3 */
+}
+
+.text-warning {
+    border: 2px solid #ffc107;
+    /* Example border color for H4 */
 }

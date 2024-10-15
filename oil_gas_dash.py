@@ -38,6 +38,8 @@ app.layout = dbc.Container([
         message="Date range cannot exceed 10 years."
     ),
       introductory_text(),
+      
+    # add style class name for this row 
     dbc.Row([
         dbc.Col([
             html.Label("Select Ticker", className="font-weight-bold"),
@@ -45,7 +47,7 @@ app.layout = dbc.Container([
                 id='price-ticker-dropdown',
                 options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()] + [{'label': 'All Tickers', 'value': 'ALL'}],
                 value='CL=F',
-                style={'marginBottom': '20px'}
+                 style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
             )
         ], width=6),
         dbc.Col([
@@ -54,7 +56,7 @@ app.layout = dbc.Container([
                 id='y-dropdown',
                 options=[{'label': col, 'value': col} for col in df.select_dtypes(include=['float64', 'int64']).columns],
                 value='close',
-                style={'marginBottom': '20px'}
+                 style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'}  
             )
         ], width=6)
     ], className="d-flex justify-content-center"),
@@ -62,6 +64,7 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col(dcc.Graph(id='price-chart', style={'width': '100%'}), width=12)
     ], className="d-flex justify-content-center mb-4"),
+
 
     dbc.Row([
         dbc.Col([
@@ -71,14 +74,14 @@ app.layout = dbc.Container([
                 id='decomposition-ticker-dropdown',
                 options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
                 value='CL=F',
-                style={'marginBottom': '20px'}
+                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
             ),
             html.Label("Select Date Range", className="font-weight-bold"),
             dcc.DatePickerRange(
                 id='date-picker-range',
                 start_date=start_date,
                 end_date=end_date,
-                style={'marginBottom': '20px'}
+                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
             )
         ], width=6)
     ], className="d-flex justify-content-center"),
@@ -95,14 +98,14 @@ app.layout = dbc.Container([
                 id='seasonal-ticker-dropdown',
                 options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
                 value='CL=F',
-                style={'marginBottom': '20px'}
+                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
             ),
             html.Label("Select Date Range", className="font-weight-bold"),
             dcc.DatePickerRange(
                 id='seasonal-date-picker-range',
                 start_date=start_date,
                 end_date=end_date,
-                style={'marginBottom': '20px'}
+                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
             )
         ], width=6)
     ], className="d-flex justify-content-center"),
