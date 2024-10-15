@@ -1,7 +1,6 @@
 import dash
-from dash import dcc
+from dash import dcc, html
 import dash_bootstrap_components as dbc
-from dash import html
 import plotly.express as px
 import pandas as pd
 from dash.dependencies import Input, Output
@@ -9,16 +8,17 @@ from graphing import analyze_oil_decomposition, analyze_seasonal_data  # Assumin
 from details import introductory_text 
 
 # Load your data
-df = pd.read_csv("datasets/all_fuels_data.csv")  # Replace "your_data.csv" with your file path
+df = pd.read_csv("datasets/all_fuels_data.csv")
 
 # Create the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
-# Calculate date range for the date pickers
+# Calculate the date range for the date pickers
 max_date = pd.to_datetime(df['date'].max())
 start_date = (max_date - pd.DateOffset(years=1)).strftime('%Y-%m-%d')
 end_date = max_date.strftime('%Y-%m-%d')
 
+# Labels for commodity tickers
 labels = {
     "CL=F": "Crude Oil",
     "HO=F": "Heating Oil",
@@ -37,15 +37,25 @@ app.layout = dbc.Container([
         id='date-warning-dialog',
         message="Date range cannot exceed 10 years."
     ),
-      introductory_text(),
-      
+    introductory_text(),
+
+    # Commodity Close Price Chart
     dbc.Row([
         dbc.Col([
             html.H3("Commodity Close Price Chart", className="text-center text-secondary mb-3 text-info"),
+            html.P("This chart visualizes the selected ticker of various commodities over time. "
+                   "Users can select a specific ticker from the dropdown menu, which includes options for "
+                   "Crude Oil, Heating Oil, Natural Gas, RBOB Gasoline, and Brent Crude Oil. Additionally, "
+                   "users can choose the feature they want to display on the Y-axis, such as the closing price "
+                   "or other numerical attributes. The chart updates dynamically based on the selected ticker and "
+                   "Y-axis feature, allowing users to analyze price trends for individual commodities or compare "
+                   "multiple commodities when 'All Tickers' is selected.", 
+                   className="body"),
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='price-ticker-dropdown',
-                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()] + [{'label': 'All Tickers', 'value': 'ALL'}],
+                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()] +
+                        [{'label': 'All Tickers', 'value': 'ALL'}],
                 value='CL=F',
                 className="dropdown-style"
             ),
@@ -56,21 +66,36 @@ app.layout = dbc.Container([
                 value='close',
                 className="dropdown-style"
             )
-            
-        ], width = 6),
+        ], width=6),
     ], className="center-row"),
 
     dbc.Row([
         dbc.Col(dcc.Graph(id='price-chart'), width=12)
     ], className="center-row mb-4"),
 
+    # Seasonal Decomposition Analysis
     dbc.Row([
         dbc.Col([
-            html.H3("Seasonal Decomposition Analysis", className="text-center text-secondary mb-3 text-info"),
+            html.H3(
+                "Seasonal Decomposition Analysis", 
+                className="text-center text-secondary mb-3 text-info"
+            ),
+            html.P(
+                "This section provides an analysis of seasonal decomposition for the selected "
+                "commodity. Seasonal decomposition is a statistical method for separating a "
+                "time series into seasonal, trend, and residual components. Users can select "
+                "a specific ticker from the dropdown menu and choose a date range for analysis. "
+                "The resulting graph will help users identify seasonal patterns and trends in "
+                "the commodity prices, facilitating better decision-making and forecasting.",
+                className="body"
+            ),
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='decomposition-ticker-dropdown',
-                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
+                options=[
+                    {'label': labels[ticker], 'value': ticker} 
+                    for ticker in df['ticker'].unique()
+                ],
                 value='CL=F',
                 className="dropdown-style"
             ),
@@ -88,13 +113,28 @@ app.layout = dbc.Container([
         dbc.Col(dcc.Graph(id='decomposition-chart'), width=12)
     ], className="center-row mb-4"),
 
+    # Seasonal Analysis
     dbc.Row([
         dbc.Col([
-            html.H3("Seasonal Analysis", className="text-center text-secondary mb-3 text-info"),
+            html.H3(
+                "Seasonal Analysis", 
+                className="text-center text-secondary mb-3 text-info"
+            ),
+            html.P(
+                "This section displays a calendar plot that analyzes the seasonal patterns of the selected "
+                "commodity. The plot highlights the highest and lowest seasonality prices within the specified date range, "
+                "with green indicating the highest prices and red indicating the lowest. Please note that the "
+                "analysis is limited to a maximum date range of 10 years, allowing for a focused examination of "
+                "seasonal trends in commodity pricing.", 
+                className="body"
+            ),
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='seasonal-ticker-dropdown',
-                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
+                options=[
+                    {'label': labels[ticker], 'value': ticker} 
+                    for ticker in df['ticker'].unique()
+                ],
                 value='CL=F',
                 className="dropdown-style"
             ),
@@ -110,7 +150,31 @@ app.layout = dbc.Container([
 
     dbc.Row([
         dbc.Col(dcc.Graph(id='seasonal-chart'), width=12)
-    ], className="center-row")
+    ], className="center-row"),
+
+    # Footer with hyperlinks in one line
+# Footer with hyperlinks in one line
+# Footer with hyperlinks in one line
+dbc.Row([
+    dbc.Col([
+        html.Hr(),
+        html.Div(
+            [
+                html.P("For more information, visit: ", className="d-inline"),  # Use d-inline for inline display
+                # dbc.NavLink("Dashboard Documentation", href="https://example.com/documentation", target="_blank", className='footer d-inline'),  # Use d-inline for inline display
+                # html.Span(" | ", className="text-light d-inline"),  # Use d-inline for inline display
+                dbc.NavLink("Data Source", href="https://www.kaggle.com/datasets/guillemservera/fuels-futures-data", target="_blank", className='footer d-inline'),  # Use d-inline for inline display
+                html.Span(" | ", className="text-light d-inline"),  # Use d-inline for inline display
+                dbc.NavLink("Github", href="https://github.com/felix101930", target="_blank", className='footer d-inline'),  # Use d-inline for inline display  
+                html.Span(" | ", className="text-light d-inline"),  # Use d-inline for inline display
+                dbc.NavLink("LinkedIn", href="https://www.linkedin.com/in/felix-gabriel-montañez", target="_blank", className='footer d-inline'),  # Use d-inline for inline display
+            ],
+            className="text-center footer"  # Add the 'footer' class here
+        )
+    ], width=12)
+])
+
+
 ], fluid=True)
 
 # Callback to update all charts based on selected tickers, Y-axis selection, and date ranges
@@ -137,7 +201,13 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
         filtered_df = df[df['ticker'] == price_ticker]
         title = f"({selected_y}) for {price_ticker}"
 
-    fig_price = px.line(filtered_df, x='date', y=selected_y, color='ticker' if price_ticker == 'ALL' else None, title=title)
+    fig_price = px.line(
+        filtered_df, 
+        x='date', 
+        y=selected_y, 
+        color='ticker' if price_ticker == 'ALL' else None, 
+        title=title
+    )
     fig_price.update_layout(
         plot_bgcolor="#545454",
         paper_bgcolor='#545454',
@@ -146,7 +216,6 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
 
     # Seasonal decomposition chart logic
     fig_seasonality = analyze_oil_decomposition(df, start_date, end_date, decomposition_ticker, selected_y)
-    
     fig_seasonality.update_layout(
         plot_bgcolor="#545454",
         paper_bgcolor='#545454',
@@ -158,17 +227,17 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
     
     # Seasonal analysis chart logic
     if date_range_exceeds_limit:
-        # Display the warning dialog
-        return fig_price, fig_seasonality, {}, True
+        return fig_price, fig_seasonality, {}, True  # Show warning dialog if date range exceeds
+    else:
+        fig_seasonal = analyze_seasonal_data(df, seasonal_start_date, seasonal_end_date, seasonal_ticker)
+        fig_seasonal.update_layout(
+            plot_bgcolor="#545454",
+            paper_bgcolor='#545454',
+            font_color='#333'
+        )
 
-    fig_seasonal = analyze_seasonal_data(df, seasonal_start_date, seasonal_end_date, seasonal_ticker)
-    fig_seasonal.update_layout(
-        plot_bgcolor="#545454",
-        paper_bgcolor='#545454',
-        font_color='#333'
-    )
+    return fig_price, fig_seasonality, fig_seasonal, False  # No warning dialog
 
-    return fig_price, fig_seasonality, fig_seasonal, False
-
+# Run the app
 if __name__ == '__main__':
     app.run_server(debug=True)

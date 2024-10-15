@@ -27,8 +27,7 @@ h4 {
 
 /* General styling */
 body {
-    background-color: #333;
-    color: #ddd;
+    color: white;
 }
 
 /* Header */
@@ -44,6 +43,7 @@ body {
     color: black;
     background-color: white;
 }
+
 
 
 .dropdown-style:hover {
@@ -70,4 +70,32 @@ body {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+}
+
+
+.footer {
+    background-color: #333; /* Dark background for the footer */
+    color: #fff; /* White text color */
+    padding: 20px; /* Padding around the footer */
+    text-align: center; /* Center align text */
+    font-weight: bold; /* Make text bold */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+.footer:hover {
+
+    color: #ffd700; /* Change text color on hover (gold) */
+}
+
+.footer a {
+
+    color: #ffd700; /* Change link color on hover */
+
+    
+}
+
+.footer a:hover {
+    background-color: #555; /* Change background color on hover */
+    color: #fff; /* Default link color */
+    text-decoration: none; /* Remove underline from links */
 }
