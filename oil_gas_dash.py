@@ -1,10 +1,3 @@
-
-# TODO: [Add details and description]
-# [Add introduction ]
-# [add Description and how to use for each graph]
-# [Add where to use for each graph]
-# [Add styles]
-
 import dash
 from dash import dcc
 import dash_bootstrap_components as dbc
@@ -13,6 +6,7 @@ import plotly.express as px
 import pandas as pd
 from dash.dependencies import Input, Output
 from graphing import analyze_oil_decomposition, analyze_seasonal_data  # Assuming analyze_seasonal_data is defined
+from details import introductory_text 
 
 # Load your data
 df = pd.read_csv("datasets/all_fuels_data.csv")  # Replace "your_data.csv" with your file path
@@ -25,22 +19,25 @@ max_date = pd.to_datetime(df['date'].max())
 start_date = (max_date - pd.DateOffset(years=1)).strftime('%Y-%m-%d')
 end_date = max_date.strftime('%Y-%m-%d')
 
-labels = { "CL=F": "Crude Oil",
-                  "HO=F": "Heating Oil",
-                  "NG=F": "Natural Gas",
-                  "RB=F": "RBOB Gasoline",
-                  "BZ=F": "Brent Crude Oil"}
+labels = {
+    "CL=F": "Crude Oil",
+    "HO=F": "Heating Oil",
+    "NG=F": "Natural Gas",
+    "RB=F": "RBOB Gasoline",
+    "BZ=F": "Brent Crude Oil"
+}
+
 # Define the layout of the app
 app.layout = dbc.Container([
     dbc.Row([
         dbc.Col(html.H1("Crude Oil Price Dashboard", className="text-center text-primary mb-4"), width=12)
     ], className="d-flex justify-content-center"),
-    
+
     dcc.ConfirmDialog(
         id='date-warning-dialog',
         message="Date range cannot exceed 10 years."
     ),
-    
+      introductory_text(),
     dbc.Row([
         dbc.Col([
             html.Label("Select Ticker", className="font-weight-bold"),
@@ -61,11 +58,11 @@ app.layout = dbc.Container([
             )
         ], width=6)
     ], className="d-flex justify-content-center"),
-    
+
     dbc.Row([
         dbc.Col(dcc.Graph(id='price-chart', style={'width': '100%'}), width=12)
     ], className="d-flex justify-content-center mb-4"),
-    
+
     dbc.Row([
         dbc.Col([
             html.H3("Seasonal Decomposition Analysis", className="text-center text-secondary mb-3"),
@@ -85,18 +82,18 @@ app.layout = dbc.Container([
             )
         ], width=6)
     ], className="d-flex justify-content-center"),
-    
+
     dbc.Row([
         dbc.Col(dcc.Graph(id='decomposition-chart', style={'width': '100%'}), width=12)
     ], className="d-flex justify-content-center mb-4"),
-    
+
     dbc.Row([
         dbc.Col([
             html.H3("Seasonal Analysis", className="text-center text-secondary mb-3"),
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='seasonal-ticker-dropdown',
-                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique() ],
+                options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
                 value='CL=F',
                 style={'marginBottom': '20px'}
             ),
@@ -109,7 +106,7 @@ app.layout = dbc.Container([
             )
         ], width=6)
     ], className="d-flex justify-content-center"),
-    
+
     dbc.Row([
         dbc.Col(dcc.Graph(id='seasonal-chart', style={'width': '100%'}), width=12)
     ], className="d-flex justify-content-center")
@@ -141,8 +138,6 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
 
     fig_price = px.line(filtered_df, x='date', y=selected_y, color='ticker' if price_ticker == 'ALL' else None, title=title)
     fig_price.update_layout(
-        # plot_bgcolor='#f2f2f2',
-        
         plot_bgcolor="#545454",
         paper_bgcolor='#545454',
         font_color='#333'
@@ -174,6 +169,5 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
 
     return fig_price, fig_seasonality, fig_seasonal, False
 
-# Run the app
 if __name__ == '__main__':
     app.run_server(debug=True)

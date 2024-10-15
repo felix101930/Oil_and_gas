@@ -1,0 +1,11 @@
+h3 {
+    border: 2px solid #007bff; /* Blue border */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+h4 {
+    border: 2px solid #ffc107; /* Yellow border */
+    padding: 10px;
+    border-radius: 5px;
+}
