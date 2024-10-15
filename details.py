@@ -7,23 +7,22 @@ def introductory_text():
         dbc.Col(html.Div([
             html.H3("Dataset Overview", className="text-info"),
             html.P(
-                """This dataset provides comprehensive and up-to-date information on futures related to oil, gas, and other fuels. 
-                Futures are financial contracts obligating the buyer to purchase and the seller to sell a specified amount of a 
-                particular fuel at a predetermined price and future date.""",
+                """This dataset offers detailed and current information on futures for oil, gas, and other fuels. Futures are financial agreements that require the buyer to purchase and the seller to deliver a specified quantity of a particular fuel at an agreed-upon price on a set future date.""",
                 style={'marginBottom': '15px'}
+            ),
+        html.P(
+                [
+                    html.A("Dataset Source", href="https://www.kaggle.com/datasets/guillemservera/fuels-futures-data", target="_blank")
+                ],
+                style={'marginTop': '15px'}
             ),
             html.H4("Use Cases:", className="text-warning"),
             html.Ul([
-                html.Li("Trend Analysis: Scrutinize patterns and price fluctuations to anticipate future market directions in the energy sector."),
-                html.Li("Academic Research: Delve into the historical behavior of oil and gas prices and understand the influence of global events on these commodities."),
-                html.Li("Trading Strategies: Develop and test trading tactics based on the dynamics of oil, gas, and other fuel futures."),
-                html.Li("Risk Management: Utilize the dataset for hedging and risk management for corporations involved in the extraction, refining, or trading of fuels.")
+                html.Li("Market Forecasting: Analyze futures data to predict pricing trends and fluctuations in oil, gas, and other fuel markets."),
+                html.Li("Investment Analysis: Examine historical and real-time futures data to inform investment decisions in the energy sector."),
+                html.Li("Commodity Trading: Develop trading strategies by leveraging futures data on oil, gas, and other fuels."),
+                html.Li("Corporate Planning: Employ the dataset to manage financial risks and optimize fuel procurement for companies engaged in energy-related industries.")
             ]),
-            html.P(
-                """Dataset Image Source: Photo by Pixabay: 
-                [link](https://www.pexels.com/photo/industrial-machine-during-golden-hour-162568/)""",
-                style={'marginTop': '15px'}
-            ),
             html.H4("Column Descriptions:", className="text-warning"),
             html.Ul([
                 html.Li("Date: The date when the data was documented. Format: YYYY-MM-DD."),

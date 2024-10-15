@@ -30,8 +30,8 @@ labels = {
 # Define the layout of the app
 app.layout = dbc.Container([
     dbc.Row([
-        dbc.Col(html.H1("Crude Oil Price Dashboard", className="text-center text-primary mb-4"), width=12)
-    ], className="d-flex justify-content-center"),
+        dbc.Col(html.H1("Crude Oil Price Dashboard", className="h1-text"), width=12)
+    ], className="center-row"),
 
     dcc.ConfirmDialog(
         id='date-warning-dialog',
@@ -39,80 +39,78 @@ app.layout = dbc.Container([
     ),
       introductory_text(),
       
-    # add style class name for this row 
     dbc.Row([
         dbc.Col([
+            html.H3("Commodity Close Price Chart", className="text-center text-secondary mb-3 text-info"),
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='price-ticker-dropdown',
                 options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()] + [{'label': 'All Tickers', 'value': 'ALL'}],
                 value='CL=F',
-                 style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
-            )
-        ], width=6),
-        dbc.Col([
+                className="dropdown-style"
+            ),
             html.Label("Select Feature for Y-axis", className="font-weight-bold"),
             dcc.Dropdown(
                 id='y-dropdown',
                 options=[{'label': col, 'value': col} for col in df.select_dtypes(include=['float64', 'int64']).columns],
                 value='close',
-                 style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'}  
+                className="dropdown-style"
             )
-        ], width=6)
-    ], className="d-flex justify-content-center"),
+            
+        ], width = 6),
+    ], className="center-row"),
 
     dbc.Row([
-        dbc.Col(dcc.Graph(id='price-chart', style={'width': '100%'}), width=12)
-    ], className="d-flex justify-content-center mb-4"),
-
+        dbc.Col(dcc.Graph(id='price-chart'), width=12)
+    ], className="center-row mb-4"),
 
     dbc.Row([
         dbc.Col([
-            html.H3("Seasonal Decomposition Analysis", className="text-center text-secondary mb-3"),
+            html.H3("Seasonal Decomposition Analysis", className="text-center text-secondary mb-3 text-info"),
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='decomposition-ticker-dropdown',
                 options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
                 value='CL=F',
-                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
+                className="dropdown-style"
             ),
             html.Label("Select Date Range", className="font-weight-bold"),
             dcc.DatePickerRange(
                 id='date-picker-range',
                 start_date=start_date,
                 end_date=end_date,
-                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
+                className="date-picker-style"
             )
         ], width=6)
-    ], className="d-flex justify-content-center"),
+    ], className="center-row"),
 
     dbc.Row([
-        dbc.Col(dcc.Graph(id='decomposition-chart', style={'width': '100%'}), width=12)
-    ], className="d-flex justify-content-center mb-4"),
+        dbc.Col(dcc.Graph(id='decomposition-chart'), width=12)
+    ], className="center-row mb-4"),
 
     dbc.Row([
         dbc.Col([
-            html.H3("Seasonal Analysis", className="text-center text-secondary mb-3"),
+            html.H3("Seasonal Analysis", className="text-center text-secondary mb-3 text-info"),
             html.Label("Select Ticker", className="font-weight-bold"),
             dcc.Dropdown(
                 id='seasonal-ticker-dropdown',
                 options=[{'label': labels[ticker], 'value': ticker} for ticker in df['ticker'].unique()],
                 value='CL=F',
-                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
+                className="dropdown-style"
             ),
             html.Label("Select Date Range", className="font-weight-bold"),
             dcc.DatePickerRange(
                 id='seasonal-date-picker-range',
                 start_date=start_date,
                 end_date=end_date,
-                style={'marginBottom': '20px', 'color': 'black', 'backgroundColor': 'white'} 
+                className="date-picker-style"
             )
         ], width=6)
-    ], className="d-flex justify-content-center"),
+    ], className="center-row"),
 
     dbc.Row([
-        dbc.Col(dcc.Graph(id='seasonal-chart', style={'width': '100%'}), width=12)
-    ], className="d-flex justify-content-center")
+        dbc.Col(dcc.Graph(id='seasonal-chart'), width=12)
+    ], className="center-row")
 ], fluid=True)
 
 # Callback to update all charts based on selected tickers, Y-axis selection, and date ranges
@@ -134,10 +132,10 @@ def update_charts(price_ticker, selected_y, decomposition_ticker, start_date, en
     # Price chart logic
     if price_ticker == 'ALL':
         filtered_df = df  # Show all tickers
-        title = f"Crude Oil Prices ({selected_y}) for All Tickers"
+        title = f"({selected_y}) for All Tickers"
     else:
         filtered_df = df[df['ticker'] == price_ticker]
-        title = f"Crude Oil ({selected_y}) for {price_ticker}"
+        title = f"({selected_y}) for {price_ticker}"
 
     fig_price = px.line(filtered_df, x='date', y=selected_y, color='ticker' if price_ticker == 'ALL' else None, title=title)
     fig_price.update_layout(

@@ -13,27 +13,6 @@ h4 {
 }
 
 
-/* assets/styles.css */
-
-/* Custom styles for dropdown options */
-.dropdown-menu {
-
-    margin-bottom: 20px;
-        color : 'black';
-        background-color: white;
-}
-
-.dropdown-item {
-    color: #000;
-    /* Change this to your desired text color */
-}
-
-.dropdown-item:hover {
-    background-color: #007bff;
-    /* Optional: Change background on hover */
-    color: #fff;
-    /* Change this to your desired text color on hover */
-}
 
 /* Additional custom styles */
 .text-info {
@@ -44,4 +23,51 @@ h4 {
 .text-warning {
     border: 2px solid #ffc107;
     /* Example border color for H4 */
+}
+
+/* General styling */
+body {
+    background-color: #333;
+    color: #ddd;
+}
+
+/* Header */
+.h1-text {
+    color: #3498db;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Dropdowns */
+.dropdown-style {
+    margin-bottom: 20px;
+    color: black;
+    background-color: white;
+}
+
+
+.dropdown-style:hover {
+    background-color: #007bff; /* Change background on hover */
+    color: black; /* Change text color on hover */
+    font-size: 1.05em; /* Optional: Increase font size slightly for pop effect */
+    transition: all 0.3s ease-in-out; /* Optional: Smooth transition */
+}
+
+/* Date Picker Range */
+.date-picker-style {
+    margin-bottom: 20px;
+    color: black;
+    background-color: white;
+}
+
+/* Container styling */
+.custom-container {
+    padding: 0 20px;
+}
+
+/* Row Styling */
+.center-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
