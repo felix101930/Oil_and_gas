@@ -13,6 +13,8 @@ df = pd.read_csv("datasets/all_fuels_data.csv")
 # Create the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
+server = app.server
+
 # Calculate the date range for the date pickers
 max_date = pd.to_datetime(df['date'].max())
 start_date = (max_date - pd.DateOffset(years=1)).strftime('%Y-%m-%d')
