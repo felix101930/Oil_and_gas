@@ -54,7 +54,7 @@ The dataset used in this dashboard is sourced from [Kaggle's Fuels Futures Data]
 
 ## Website
 
-You can access the live version of the dashboard at the following link: [Crude Oil Price Dashboard](https://oil-and-gas.onrender.com/)
+You can access the live version of the dashboard at the following link: [Oil and Gas Futures Dashboard](https://oil-and-gas.onrender.com/)
 
 **Note:** Since this dashboard is hosted on a free Render account, it may take some time to boot up when accessed for the first time
 
