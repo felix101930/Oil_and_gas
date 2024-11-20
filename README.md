@@ -1,4 +1,4 @@
-# Crude Oil Price Dashboard
+# Oil and Gas Futures Dashboard
 
 This is a web application for visualizing and analyzing historical price data for various fuel commodities, such as crude oil, heating oil, natural gas, RBOB gasoline, and Brent crude oil. The dashboard is built with Python, Dash, Plotly, and Bootstrap for a responsive and modern design.
 

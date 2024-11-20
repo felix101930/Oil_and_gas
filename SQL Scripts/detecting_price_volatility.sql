@@ -1,3 +1,4 @@
+-- TODO modify stdev formula
 WITH PriceVolatility AS (
     SELECT 
         [ticker],
@@ -19,6 +20,6 @@ SELECT
 FROM 
     PriceVolatility
 WHERE 
-    stdev_close_7_days > 0.5 * avg_close_7_days -- Adjust threshold for volatility
+    stdev_close_7_days > 0.1 * avg_close_7_days -- Adjust threshold for volatility
 ORDER BY 
     [date];
