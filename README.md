@@ -19,6 +19,10 @@ This is a web application for visualizing and analyzing historical price data fo
 ## Screenshots
 ![Screenshot 1](https://github.com/felix101930/Oil_and_gas/blob/dash_app_render/Screenshot1.png)
 
+## PowerBI Visualization
+![image](https://github.com/felix101930/Oil_and_gas/blob/main/PowerBI%20Visualization.png)
+
+
 ## Installation
 To run this project locally, follow these steps:
 
